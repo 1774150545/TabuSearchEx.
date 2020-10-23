@@ -84,7 +84,7 @@ void Init(string filepath){
             adj_color_v[i][nei_color]++;
         }
     }
-    f = f/2;
+    f = f/2; //无向图
     best_f = f;
     cout<<"init f is: "<<f <<endl;
 }
@@ -160,7 +160,7 @@ void MakeMove(){
     int old_color = sol[node];
     assert(old_color != color); 
     sol[node] = color;
-    tabuList[node][old_color] = iter + f +rand() %10 +1 ;//禁忌步数公式
+    tabuList[node][old_color] = iter + f +rand() %10 +1 ;//禁忌步数公式 , 禁忌表的内容和iter作比较，就不需要每次更新整个tabuList
     int nei_num = n_edges[node];
     int adj_node;
     for(int i=0;i<nei_num;i++) { //相邻的节点更新冲突值
