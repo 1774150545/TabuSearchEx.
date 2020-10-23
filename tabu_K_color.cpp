@@ -84,7 +84,7 @@ void Init(string filepath){
             adj_color_v[i][nei_color]++;
         }
     }
-    f = f/2; //无向图
+    f = f/2;
     best_f = f;
     cout<<"init f is: "<<f <<endl;
 }
@@ -153,14 +153,14 @@ void FindMove() {
 //选择了一轮的最优后更新
 void MakeMove(){
     f = iter_delt +f;
-    if(f < best_f) {
+    if( f < best_f) {
         best_f = f;
     }
     int node = iterSolution[0], color = iterSolution[1];
     int old_color = sol[node];
     assert(old_color != color); 
     sol[node] = color;
-    tabuList[node][old_color] = iter + f +rand() %10 +1 ;//禁忌步数公式 , 禁忌表的内容和iter作比较，就不需要每次更新整个tabuList
+    tabuList[node][old_color] = iter + f +rand() %10 +1 ;//禁忌步数公式, 禁忌表的步数和iter做比较，可以避免每轮更新整个tabuList
     int nei_num = n_edges[node];
     int adj_node;
     for(int i=0;i<nei_num;i++) { //相邻的节点更新冲突值
@@ -174,19 +174,21 @@ void MakeMove(){
 
 //禁忌搜索
 void tabuSearch(){
-    int Not_improve = 80000000,tmp_step = 0;
+    int Not_improve = 80000000, tmp_step = 0;
     double start,end,cost_time;
     iter = 0;
     start = clock();
     while(f>0){
         iter++;
         FindMove();
-        if( best_f <= f){
+        if( best_f <= f + iter_delt){
             tmp_step++;
-            if(tmp_step > Not_improve){
+            if(tmp_step > Not_improve){ //超过迭代步数上限, 没有更新best_f
                 cout<<"can not find a solution, please try again"<<endl;
                 break;
             }   
+        }else{
+            tmp_step = 0;
         }
         MakeMove();
         if ((iter % 500000) == 0) cout << "iter: "<< iter << "  f:  " << f << "  bsetf:  " << best_f <<"  K:  "<<K<< endl;
@@ -194,7 +196,7 @@ void tabuSearch(){
     end = clock();
     cout<<start<<endl<<end<<endl;
     cost_time = (double(end - start)) / CLOCKS_PER_SEC;
-	cout<<" f "<<f<<" Iter "<<iter<<" cost_time "<<cost_time<<endl;
+    cout<<" f "<<f<<" Iter "<<iter<<" cost_time "<<cost_time<<endl;
     cout<<"SOLUTION:"<<endl;
     for(int i=0;i<N;i++)
        cout<<sol[i]<<" ";

@@ -177,13 +177,15 @@ bool try_tabu(){
     while(f>0){
         iter++;
         FindMove();
-        if(best_f <= f){
+        if(best_f <= f + iter_delt){
             tmp_step++;
-            if(tmp_step % 5000000 == 0) cout<<"not improve, step"<<tmp_step<<endl;
+            if(tmp_step % 5000000 == 0) cout<<"not improve, step"<< tmp_step << endl;
             if(tmp_step > Not_improve){
-                cout<<"can not find a solution, please try again"<<endl;
+                cout<<"can not find a solution please try again! sum color :"<< K << endl;
                 return false;
             }   
+        }else{
+            tmp_step = 0;
         }
         MakeMove();
         if ((iter % 500000) == 0) cout << "iter: "<< iter << "  f:  " << f << "  bsetf:  " << best_f <<"  K:  "<<K<< endl;
