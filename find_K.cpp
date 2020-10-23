@@ -18,8 +18,8 @@ int iter_delt; //一轮迭代后选择的变化值
 int tabu_delt; //存放可能成为禁忌解的变化值
 int best_f; //历史最小f
 int iter; //迭代轮数
-int solution[2000][2]; //非禁忌的解
-int tabuSolution[2000][2]; //禁忌的解
+int solution[20000][2]; //非禁忌的解
+int tabuSolution[20000][2]; //禁忌的解
 int iterSolution[2]; //每次迭代选择的解
 
 // 分割字符串
@@ -218,7 +218,6 @@ int main() {
     {
         string relative = filename[CASE];
         string filepath = absolute+relative;
-        cout<<"Input number of colors:"<<endl;
 
         if(CASE == 0 || CASE == 3 || CASE == 6)
             start_num = 20; 
