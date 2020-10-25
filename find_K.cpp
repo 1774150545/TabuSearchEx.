@@ -172,25 +172,29 @@ void MakeMove(){
 }
 
 bool try_tabu(){
-    int Not_improve = 50000000,tmp_step = 0;
+    double start,end;
+    int Not_improve = 100000000,tmp_step = 0;
     iter = 0;
+    start = clock();
     while(f>0){
+        //加入计时
         iter++;
         FindMove();
         if(best_f <= f + iter_delt){
             tmp_step++;
             if(tmp_step % 5000000 == 0) cout<<"not improve, step"<< tmp_step << endl;
             if(tmp_step > Not_improve){
-                cout<<"can not find a solution please try again! sum color :"<< K << endl;
+                cout<<"can not find a solution please try again! " << endl <<endl;
                 return false;
             }   
         }else{
             tmp_step = 0;
         }
         MakeMove();
-        if ((iter % 500000) == 0) cout << "iter: "<< iter << "  f:  " << f << "  bsetf:  " << best_f <<"  K:  "<<K<< endl;
+        if (iter % 500000 == 0) cout << "iter: "<< iter << "  f:  " << f << "  bsetf:  " << best_f <<"  K:  "<<K<< endl;
     }
-    cout<<"iter"<<iter<<endl;
+    end = clock();
+    cout<< "cost time: "<< (double(end-start))/CLOCKS_PER_SEC <<endl;
     return true;
 
 }
@@ -198,13 +202,15 @@ bool try_tabu(){
 //尝试禁忌搜索
 void tabuSearch(string filepath){
     bool flag = true;
-    while(flag){ 
+    while(true){ 
         Init(filepath);
         flag = try_tabu();
-        cout<<"Avaliable K: "<< K <<endl;
+        if(!flag) break;
+        cout<<"Avaliable K: "<< K << endl <<endl;
         K--;
         cout<<" Try K="<< K <<"......"<<endl;
     }
+    cout<< " Avaliable K:"<< (++K) <<endl;
 }
 
 
