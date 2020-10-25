@@ -217,7 +217,7 @@ void tabuSearch(string filepath){
 int main() {
     int CASE;
     int start_num;
-    string absolute="E:\\tool\\CodeBlocks16\\2020_algorithm\\tabu_search\\Graph-coloring\\tabucol-master-senior\\data\\";
+    string absolute="E:\\tool\\CodeBlocks16\\2020_algorithm\\tabu_search\\Graph-coloring\\data\\";
     string filename[12] = {"DSJC125.1.col", "DSJC125.5.col", "DSJC125.9.col", "DSJC250.1.col", "DSJC250.5.col","DSJC250.9.col","DSJC500.1.col","DSJC500.5.col","DSJC500.9.col","DSJC1000.1.col","DSJC1000.5.col","DSJC1000.9.col"};
     cout<<"Enter the numbers as follows:"<<endl;
     cout<<"(0)DSJC125.1.col  (1)DSJC125.5.col   (2)DSJC125.9.col   (3)DSJC250.1.col  (4)DSJC250.5.col  (5)DSJC250.9.col  (6)DSJC500.1.col  (7)DSJC500.5.col"<<endl;
