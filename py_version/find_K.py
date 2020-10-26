@@ -83,13 +83,13 @@ def FindMove():
     for i in range(N):  # adj_color_v 的行
         cur_color = sol[i]
         cur_value = adj_color_v[i][cur_color]
-        if cur_value > 0:  # >0才考虑, 否则如果tmp_delt<0, 这种情况不会更新solution或者tabuSolution, 如果为tmp_delt==0，这种情况应该极少，而且换了没有意义
+        if cur_value > 0:  # >0才考虑, =0代表这个节点此颜色已经无冲突，不需要换
             # print("at least run", cur_value)
             for j in range(K):  # adj_color_v 的列
                 if cur_color != j:
                     # 非禁忌移动
                     tmp_delt = adj_color_v[i][j] - cur_value  # 邻居节点更新完，所有邻居的冲突总数不变，delt来源是自己(节点i)的颜色改变
-                    if tabuList[i][j] <= iterI: # todo 这里之前写错了，之前写的是tabuList[i][cur_color] <= iterI:
+                    if tabuList[i][j] <= iterI: # 这里之前写错了，之前写的是tabuList[i][cur_color] <= iterI:
                         # 非禁忌移动
                         if tmp_delt < iter_delt:
                             iter_delt = tmp_delt
@@ -108,7 +108,7 @@ def FindMove():
                             tabu_count += 1
                             tabuSolution[tabu_count - 1] = i, j
 
-    if tabu_delt + f < best_f and tabu_delt < iter_delt:  # 除了满足历史最优，还要比此轮非禁忌解优秀
+    if tabu_delt + f < best_f and tabu_delt < iter_delt:  # 除了满足让f达到历史最优，还要比此轮非禁忌解优秀
         iter_delt = tabu_delt
         randI = random.randint(0, tabu_count - 1)
         iterSolution = tabuSolution[randI]
